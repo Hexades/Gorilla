@@ -1,2 +1,0 @@
-# Gorilla
-Gorilla Mux Hexade
