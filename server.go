@@ -9,7 +9,7 @@ import (
 func NewServer() *server {
 	s := new(server)
 	s.router = mux.NewRouter()
-	bus.Get().AddServerListener(s)
+	bus.AddServerListener(s)
 	return s
 }
 

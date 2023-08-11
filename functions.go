@@ -12,7 +12,7 @@ import (
 type SynchronousFunc = func(server *server) bus.Response
 type AsyncFunc = func(server *server)
 
-func PingHandler(w http.ResponseWriter, r *http.Request) {
+var PingHandler = func(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
@@ -34,6 +34,7 @@ var ServerStart = func(host string, readTimeout, writeTimeout int64) AsyncFunc {
 }
 var HandlerFunc = func(path string, handler func(w http.ResponseWriter, r *http.Request)) AsyncFunc {
 	return func(server *server) {
+		log.Println("Setting server: ", server)
 		server.router.HandleFunc(path, handler)
 	}
 }
