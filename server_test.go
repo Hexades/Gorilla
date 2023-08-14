@@ -1,4 +1,4 @@
-package gorilla
+package hgorilla
 
 import (
 	"github.com/stretchr/testify/assert"

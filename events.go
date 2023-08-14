@@ -1,4 +1,4 @@
-package gorilla
+package hgorilla
 
 type Event interface {
 	Execute(server *server)
