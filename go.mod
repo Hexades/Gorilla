@@ -1,4 +1,4 @@
-module github.com/hexades/hgorilla
+module github.com/hexades/gorilla
 
 go 1.21.0
 

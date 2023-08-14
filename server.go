@@ -1,4 +1,4 @@
-package hgorilla
+package gorilla
 
 import (
 	"github.com/gorilla/mux"

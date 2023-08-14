@@ -1,4 +1,4 @@
-package hgorilla
+package gorilla
 
 var bus = gorillabus{}
 

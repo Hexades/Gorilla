@@ -1,4 +1,4 @@
-package hgorilla
+package gorilla
 
 import (
 	"log"
