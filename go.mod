@@ -4,7 +4,6 @@ go 1.21.0
 
 require (
 	github.com/gorilla/mux v1.7.0
-	github.com/hexades/hexabus v0.1.2
 	github.com/stretchr/testify v1.8.4
 )
 

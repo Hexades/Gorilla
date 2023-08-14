@@ -2,15 +2,14 @@ package gorilla
 
 import (
 	"github.com/gorilla/mux"
-	bus "github.com/hexades/hexabus"
 	"net/http"
 )
 
-func NewServer() *server {
+func NewServer() {
 	s := new(server)
 	s.router = mux.NewRouter()
-	bus.AddServerListener(s)
-	return s
+	AddListener(s)
+
 }
 
 type server struct {
@@ -18,12 +17,10 @@ type server struct {
 	router *mux.Router
 }
 
-func (s *server) OnServerEvent(eventChannel <-chan bus.ServerEvent) {
+func (s *server) onEvent(eventChannel <-chan Event) {
 
-	for serverEvent := range eventChannel {
-		switch event := serverEvent.(type) {
-		case GorillaEvent:
-			go event.Execute(s)
-		}
+	for evt := range eventChannel {
+		go evt.Execute(s)
 	}
+
 }

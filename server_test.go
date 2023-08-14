@@ -1,14 +1,11 @@
 package gorilla
 
 import (
-	bus "github.com/hexades/hexabus"
 	"github.com/stretchr/testify/assert"
 	"log"
 	"net/http"
 	"testing"
 )
-
-var s *server
 
 func TestGorillaSuite(t *testing.T) {
 	startServer(t)
@@ -18,7 +15,7 @@ func TestGorillaSuite(t *testing.T) {
 	//s.router.HandleFunc("/ping", PingHandler)
 
 	resp, err := http.Get("http://localhost:8080/ping")
-
+	log.Println(resp.StatusCode)
 	assert.Nil(t, err)
 	assert.NotNil(t, resp)
 	assert.Equal(t, http.StatusOK, resp.StatusCode)
@@ -26,17 +23,15 @@ func TestGorillaSuite(t *testing.T) {
 
 func startServer(t *testing.T) {
 	log.Println("Start server...")
-	s = NewServer()
-	assert.NotNil(t, s)
+	NewServer()
 	log.Println("Send server configuration information...")
-	evt := NewSendEvent(ServerStart("localhost:8080", 15, 15))
-	bus.SendServerEvent(evt)
-
+	evt := NewEvent(ServerStart("localhost:8080", 15, 15))
+	SendEvent(evt)
 	log.Println("Done with start up.")
 }
 
 func configureHandler(t *testing.T) {
-	evt := NewSendEvent(HandlerFunc("/ping", PingHandler))
-	bus.SendServerEvent(evt)
+	evt := NewEvent(HandlerFunc("/ping", PingHandler))
+	SendEvent(evt)
 
 }

@@ -6,18 +6,16 @@ import (
 	"time"
 
 	"github.com/gorilla/mux"
-	bus "github.com/hexades/hexabus"
 )
 
-type SynchronousFunc = func(server *server) bus.Response
-type AsyncFunc = func(server *server)
+type Executable = func(*server) Response
 
 var PingHandler = func(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
-var ServerStart = func(host string, readTimeout, writeTimeout int64) AsyncFunc {
-	return func(server *server) {
+var ServerStart = func(host string, readTimeout, writeTimeout int64) Executable {
+	return func(server *server) Response {
 
 		server.router = mux.NewRouter()
 		//TODO The time out multiplication time seconds works with const value but not passed in integers. TBD.
@@ -27,14 +25,16 @@ var ServerStart = func(host string, readTimeout, writeTimeout int64) AsyncFunc {
 			WriteTimeout: 15 * time.Second,
 			ReadTimeout:  15 * time.Second,
 		}
-		log.Println("Start server on ", server.srv.Addr)
-		err := server.srv.ListenAndServe()
-		log.Panic(err)
+
+		go server.srv.ListenAndServe()
+		return Response{"Listening on address: " + server.srv.Addr, nil}
+
 	}
 }
-var HandlerFunc = func(path string, handler func(w http.ResponseWriter, r *http.Request)) AsyncFunc {
-	return func(server *server) {
+var HandlerFunc = func(path string, handler func(w http.ResponseWriter, r *http.Request)) Executable {
+	return func(server *server) Response {
 		log.Println("Setting server: ", server)
 		server.router.HandleFunc(path, handler)
+		return Response{"OK", nil}
 	}
 }
