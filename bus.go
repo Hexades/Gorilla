@@ -9,7 +9,7 @@ type gorillabus struct {
 func AddListener(eventListener EventListener) {
 	listenerChannel := make(chan Event, 10)
 	bus.listenerChannels = append(bus.listenerChannels, listenerChannel)
-	go eventListener.onEvent(listenerChannel)
+	go eventListener.OnEvent(listenerChannel)
 }
 
 func SendEvent(event Event) {
@@ -19,5 +19,5 @@ func SendEvent(event Event) {
 }
 
 type EventListener interface {
-	onEvent(eventChannel <-chan Event)
+	OnEvent(eventChannel <-chan Event)
 }

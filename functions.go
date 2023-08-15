@@ -12,6 +12,8 @@ type Executable = func(*server) Response
 
 var PingHandler = func(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
+	log.Println("Ping")
+	w.Write([]byte("Pong!"))
 }
 
 var ServerStart = func(host string, readTimeout, writeTimeout int64) Executable {

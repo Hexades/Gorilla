@@ -17,7 +17,7 @@ type server struct {
 	router *mux.Router
 }
 
-func (s *server) onEvent(eventChannel <-chan Event) {
+func (s *server) OnEvent(eventChannel <-chan Event) {
 
 	for evt := range eventChannel {
 		go evt.Execute(s)

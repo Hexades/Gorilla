@@ -18,7 +18,7 @@ func (e *EventModel) Execute(server *server) {
 	e.executable(server)
 }
 
-// TODO context time out on channel?
+// TODO context time out on channel
 func (e *EventModel) getChannel() chan Response {
 	if e.responseChannel == nil {
 		e.responseChannel = make(chan Response, 1)
